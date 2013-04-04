@@ -1,6 +1,7 @@
 from django.core.urlresolvers import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 from lists.views import home_page
 
 
@@ -14,11 +15,6 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
 
-        # HTML5 doctype
-        self.assertTrue(response.content.strip().startswith('<!DOCTYPE html>'))
-
-        # <title>
-        self.assertIn('<title>To-Do lists</title>', response.content)
-
-        # valid closing </html> element
-        self.assertTrue(response.content.strip().endswith('</html>'))
+        # now just testing that we're rendering the correct template
+        expected_html = render_to_string('home.html')
+        self.assertEqual(response.content, expected_html)
