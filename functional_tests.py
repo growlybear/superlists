@@ -38,10 +38,10 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id-list-table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(any(
-            row.text == '1: Buy peacock feathers'
-            for row in rows
-        ))
+        self.assertTrue(
+            any('1: Buy peacock feathers' in row.text for row in rows),
+            "New to-do item did not appear in the to-do items table"
+        )
 
         # There is still a text ox inviting her to add another item.
         # She enters "Use peacock feathers to make a fly" (Edith is very methodical)
