@@ -13,6 +13,12 @@ class HomePageTest(TestCase):
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = home_page(request)
-        self.assertTrue(response.content.startswith('<html>'))
+
+        # HTML5 doctype
+        self.assertTrue(response.content.strip().startswith('<!DOCTYPE html>'))
+
+        # <title>
         self.assertIn('<title>To-Do lists</title>', response.content)
-        self.assertTrue(response.content.endswith('</html>'))
+
+        # valid closing </html> element
+        self.assertTrue(response.content.strip().endswith('</html>'))
